@@ -1,39 +1,41 @@
-package lppractical;
+
+package group2;
 
 import java.util.*;
 
-public class FCFS{
-	
-	public static void main(String args[])
-	{
+public class Fcfs {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub	
+		
 		Scanner sc = new Scanner(System.in);
-		System.out.println("enter number of process");
-		int n=sc.nextInt();
-		int pid[]=new int[n];
-		int ar[]=new int[n];
-		int bt[]=new int[n];
-		int ct[]=new int[n];
-		int ta[]=new int[n];
-		int wt[]=new int[n];
+		System.out.println("Enter the number of process : ");
+		int n = sc.nextInt();
+		
+		int pid[] = new int[n];
+		int at[] = new int[n];
+		int bt[] = new int[n];
+		int ct[] = new int[n];
+		int wt[] = new int[n];
+		int tat[] = new int[n];
 		int temp;
-		float avgwt=0,avgta=0;
-		for(int i=0;i<n;i++)
-		{
-			System.out.println("enter the processes" + (i+1) + "arrival time:");
-			ar[i]=sc.nextInt();
-			System.out.println("enter the processes" + (i+1) + "brust time:");
-			bt[i]=sc.nextInt();
-			pid[i]=i+1;
+		float totalWt=0, totalTat=0;
+		
+		for(int i=0; i<n; i++) {
+			System.out.println("Enter process " + (i+1) + " arrival time : ");
+			at[i] = sc.nextInt();
+			
+			System.out.println("Enter process " + (i+1) + " burst time : ");
+			bt[i] = sc.nextInt();
+			pid[i] = i+1;
 		}
-		for(int i=0;i<n;i++)
-		{
-			for(int j=0;j<n;j++)
-			{
-				if(ar[j]>ar[j+1])
-				{
-					temp=ar[j];
-					ar[j]=ar[j+1];
-					ar[j+1]=temp;
+		
+		for(int i=0; i<n; i++) {
+			for(int j=0; j<n-(i+1); j++) {
+				if( at[j] > at[j+1]) {
+					temp=at[j];
+					at[j]=at[j+1];
+					at[j+1]=temp;
 					temp=bt[j];
 					bt[j]=bt[j+1];
 					bt[j+1]=temp;
@@ -43,39 +45,34 @@ public class FCFS{
 				}
 			}
 		}
-		for(int i=0;i<n;i++)
-		{
-			if(i==0)
-			{
-				ct[i]=ar[i]+bt[i];
-			}
-			else
-			{
-				if(ar[i]>ct[i-1])
-				{
-					ct[i]=ar[i]+bt[i];
-				}
-				else
-				{
-					ct[i]=ct[i-1]+bt[i];
-				}
-			}
-				ta[i]=ct[i]-ar[i];
-				wt[i]=ta[i]-bt[i];
-				avgwt+=wt[i];
-				avgta+=ta[i];
-			}
 		
-			System.out.println("\n pid arrival brust complete turn page 1 waiting ");
-			for(int i=0;i<n;i++)
-			{
-				System.out.println(pid[i] + "\t" + ar[i] + "\t" + bt[i] + "\t" + ct[i] + "\t" + ta[i] + "\t" + wt[i]);
+		for(int i=0; i<n; i++) {
+			if(i==0) {
+				ct[i] = at[i]+bt[i];
+			}else {
+				if(at[i] > ct[i-1]) {
+					ct[i] = at[i]+bt[i];
+				}else {
+					ct[i] = ct[i-1]+bt[i];
+				}
 			}
-			sc.close();
-			System.out.println("\n anerage waiting time:"+(avgwt/n));
-			System.out.println("\n anerage turnaround time:"+(avgta/n));
-			
+			tat[i]=ct[i]-at[i];
+			wt[i]=tat[i]-bt[i];
+			totalWt+=wt[i];
+			totalTat+=tat[i];
 		}
+		
+		System.out.println("\npid\tat\tbt\tct\ttat\twt");
+		for(int i=0; i<n; i++) {
+			System.out.println(pid[i]+"\t"+at[i]+"\t"+bt[i]+"\t"+ct[i]+"\t"+tat[i]+"\t"+wt[i]);
+		}
+		
+		sc.close();
+		
+		System.out.println("The avg turn around time : " + (totalTat/n));
+		System.out.println("The avg waiting time : " + (totalWt/n));
 
 	}
+
+}
 
