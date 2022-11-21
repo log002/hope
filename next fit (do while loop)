@@ -1,0 +1,61 @@
+public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the no of process ");
+		int n=sc.nextInt();
+		
+		int psize[]=new int[n];
+		int pid[]=new int[n];
+		int allocation[]=new int[n];
+		
+		
+		for(int i=0;i<n;i++) {
+			System.out.println("Enter the size of process "+(i+1));
+			psize[i]=sc.nextInt();
+			
+			pid[i]=i+1;
+			
+			allocation[i]=-1;
+		}
+		
+		int blocks[]= {200,100,300,400,500};
+		int m=blocks.length;
+		
+		
+		int j=0;
+		for(int i=0;i<n;i++) {
+			
+			int prev=j;
+			
+			do {
+				
+				if(blocks[j]>=psize[i]) {
+					blocks[j]-=psize[i];
+					allocation[i]=j+1;
+					break;
+				}
+				
+				j=(j+1)%m;
+				
+			}while(j!=prev);
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+	System.out.println("pid\tpsize\tallocation");
+		
+		for(int i=0;i<n;i++) {
+			if(allocation[i]==-1)
+			System.out.println(pid[i]+"\t"+psize[i]+"\t"+"Not allocated ");
+			else
+				System.out.println(pid[i]+"\t"+psize[i]+"\t"+allocation[i]);
+				
+		}
+		
+	}
